@@ -63,6 +63,10 @@ func compress(in []byte) ([]byte, error) {
 		if c == '\t' {
 			c = ' '
 		}
+		// 干掉第一个空格
+		if j == 0 && c == ' ' {
+			continue
+		}
 		// 处理,:;后面的空格，同时处理连续空格问题
 		if c == ' ' || c == ',' || c == ':' || c == ';' || c == '{' || c == '}' {
 			// 后面所有的空格都不要啦
@@ -82,15 +86,8 @@ func compress(in []byte) ([]byte, error) {
 		if c == '}' && (out[j-1] == ' ' || out[j-1] == ';') {
 			j--
 		}
-		// 干掉第一个空格
-		if j == 0 && c == ' ' {
-			continue
-		}
 		out[j] = c
 		j++
-	}
-	if j > 0 {
-		j--
 	}
 	return out[0:j], nil
 }
