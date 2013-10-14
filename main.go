@@ -89,5 +89,8 @@ func compress(in []byte) ([]byte, error) {
 		out[j] = c
 		j++
 	}
-	return out, nil
+	if j > 0 {
+		j--
+	}
+	return out[0:j], nil
 }
